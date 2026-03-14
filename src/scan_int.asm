@@ -8,14 +8,13 @@ scan_int:
     push ebp
     mov ebp, esp
 
-    ; syscall read
     mov eax, 3
     mov ebx, 0
-    mov ecx, buffer_int   ; ← aquí estaba el error
+    mov ecx, buffer_int   
     mov edx, 12
     int 0x80
 
-    ; convertir ASCII -> entero
+    
     mov esi, buffer_int
     xor eax, eax
     xor ebx, ebx

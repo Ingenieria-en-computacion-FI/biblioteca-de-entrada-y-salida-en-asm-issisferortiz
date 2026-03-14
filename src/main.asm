@@ -13,9 +13,9 @@ print_string:
     push ebp
     mov ebp, esp
 
-    mov ecx, eax      ; dirección de la cadena
+    mov ecx, eax      
     mov esi, eax
-    xor edx, edx      ; longitud
+    xor edx, edx      
 
 count_loop:
     cmp byte [esi], 0
@@ -25,8 +25,8 @@ count_loop:
     jmp count_loop
 
 print:
-    mov eax, 4        ; syscall write
-    mov ebx, 1        ; stdout
+    mov eax, 4       
+    mov ebx, 1       
     int 0x80
 
     mov esp, ebp

@@ -16,13 +16,12 @@ scan_char:
     mov ebp, esp
 
     ; syscall read
-    mov eax, 3        ; read
-    mov ebx, 0        ; stdin
+    mov eax, 3       
+    mov ebx, 0       
     mov ecx, char_buffer
-    mov edx, 1        ; leer 1 byte
+    mov edx, 1       
     int 0x80
 
-    ; devolver caracter en AL
     mov al, [char_buffer]
 
     mov esp, ebp
