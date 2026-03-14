@@ -1,68 +1,34 @@
-%include "../include/io.inc"
-
-global _start
-
-SECTION .data
-
-msg_int db "Ingrese un numero:",10,0
-msg_char db "Ingrese un caracter:",10,0
-msg_str db "Ingrese una cadena:",10,0
-
-msg_result db "Resultados:",10,0
-
-buffer resb 64
-
 SECTION .text
+global print_string
 
-_start:
+; ---------------------------------
+; print_string
+; Entrada:
+;   EAX = direccion de cadena
+;   cadena terminada en 0
+; ---------------------------------
 
-    ; -------------------------
-    ; pedir entero
-    ; -------------------------
+print_string:
 
-    mov eax, msg_int
-    call print_string
+    push ebp
+    mov ebp, esp
 
-    call scan_int
-    call print_int
-    call newline
+    mov ecx, eax      ; dirección de la cadena
+    mov esi, eax
+    xor edx, edx      ; longitud
 
+count_loop:
+    cmp byte [esi], 0
+    je print
+    inc esi
+    inc edx
+    jmp count_loop
 
-    ; -------------------------
-    ; pedir caracter
-    ; -------------------------
-
-    mov eax, msg_char
-    call print_string
-
-    call scan_char
-    call print_char
-    call newline
-
-
-    ; -------------------------
-    ; pedir cadena
-    ; -------------------------
-
-    mov eax, msg_str
-    call print_string
-
-    mov eax, buffer
-    mov ebx, 64
-    call scan_string
-
-    mov eax, msg_result
-    call print_string
-
-    mov eax, buffer
-    call print_string
-    call newline
-
-
-    ; -------------------------
-    ; salir
-    ; -------------------------
-
-    mov eax,1
-    xor ebx,ebx
+print:
+    mov eax, 4        ; syscall write
+    mov ebx, 1        ; stdout
     int 0x80
+
+    mov esp, ebp
+    pop ebp
+    ret
