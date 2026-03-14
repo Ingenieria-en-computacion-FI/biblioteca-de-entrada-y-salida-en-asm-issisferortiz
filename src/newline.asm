@@ -9,8 +9,7 @@ newline:
     mov ebp, esp
 
     ; imprimir '\n'
-
-    mov eax, 10
+    mov al, 10
     call print_char
 
     mov esp, ebp

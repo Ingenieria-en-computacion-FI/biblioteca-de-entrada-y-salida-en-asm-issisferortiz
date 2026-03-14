@@ -1,3 +1,6 @@
+SECTION .data
+char db 0
+
 SECTION .text
 global print_char
 
@@ -12,12 +15,15 @@ print_char:
     push ebp
     mov ebp, esp
 
-    ; TODO:
-    ; 1. Guardar el caracter en memoria
-    ; 2. Usar syscall write
-    ; 3. Imprimir 1 byte
+    ; guardar caracter
+    mov [char], al
 
-    ; write(fd=1, buffer, 1)
+    ; syscall write
+    mov eax, 4      ; syscall write
+    mov ebx, 1      ; stdout
+    mov ecx, char   ; direccion del caracter
+    mov edx, 1      ; imprimir 1 byte
+    int 0x80
 
     mov esp, ebp
     pop ebp

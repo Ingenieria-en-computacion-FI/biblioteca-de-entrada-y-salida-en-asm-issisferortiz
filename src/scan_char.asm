@@ -15,10 +15,15 @@ scan_char:
     push ebp
     mov ebp, esp
 
-    ; TODO:
-    ; 1. usar syscall read
-    ; 2. leer 1 byte desde stdin
-    ; 3. devolverlo en AL
+    ; syscall read
+    mov eax, 3        ; read
+    mov ebx, 0        ; stdin
+    mov ecx, char_buffer
+    mov edx, 1        ; leer 1 byte
+    int 0x80
+
+    ; devolver caracter en AL
+    mov al, [char_buffer]
 
     mov esp, ebp
     pop ebp
